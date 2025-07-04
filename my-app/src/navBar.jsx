@@ -1,24 +1,34 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
+import Typed from "typed.js";
 
 export default function NavBar() {
-  const toggleNavLinks = useCallback(() => {
-    const navLinks = document.querySelector(".nav-links");
-    navLinks?.classList.toggle("active");
+  useEffect(() => {
+    // Typed.js animation
+    const typed2 = new Typed("#navText", {
+      strings: ["Portfolio"],
+      typeSpeed: 150,
+      loop: false,
+      showCursor: false,
+    });
 
-    // update aria-expanded
+    // Hamburger toggle
     const navToggle = document.querySelector(".nav-toggle");
-    if (navToggle) {
+    const navLinks = document.querySelector(".nav-links");
+
+    const handleClick = () => {
+      navLinks?.classList.toggle("active");
       const expanded = navToggle.getAttribute("aria-expanded") === "true";
       navToggle.setAttribute("aria-expanded", String(!expanded));
-    }
+    };
+
+    navToggle?.addEventListener("click", handleClick);
+
+    // cleanup
+    return () => {
+      typed2.destroy();
+      navToggle?.removeEventListener("click", handleClick);
+    };
   }, []);
-
-  useEffect(() => {
-    const navToggle = document.querySelector(".nav-toggle");
-    navToggle?.addEventListener("click", toggleNavLinks);
-
-    return () => navToggle?.removeEventListener("click", toggleNavLinks);
-  }, [toggleNavLinks]);
 
   return (
     <header>

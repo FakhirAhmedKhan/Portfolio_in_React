@@ -1,4 +1,22 @@
+import { useEffect } from "react";
+import Typed from "typed.js";
+
 export default function Home() {
+  useEffect(() => {
+    const typed1 = new Typed("#typed", {
+      strings: ["Web Designer", "Web Developer"],
+      typeSpeed: 80,
+      backDelay: 1000,
+      backSpeed: 50,
+      loop: true,
+      showCursor: false,
+    });
+
+    return () => {
+      typed1.destroy();
+    };
+  }, []);
+
   return (
     <main id="home">
       <section className="firstSection flex flex-wrap items-center justify-center py-8 gap-[var(--gap)]">
@@ -24,7 +42,7 @@ export default function Home() {
           <img
             src="./assets/homeImg.png"
             alt="Portrait of Fakhir Ahmed Khan"
-            className="homeImg block w-[400px] h-auto rounded-[12px] ml-10 cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 "
+            className="homeImg block w-[400px] h-auto rounded-[12px] ml-10 cursor-pointer transition-all duration-300 ease-in-out hover:scale-110"
             loading="lazy"
           />
         </div>
