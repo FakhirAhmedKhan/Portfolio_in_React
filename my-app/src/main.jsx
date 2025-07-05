@@ -7,12 +7,21 @@ import About from "./about";
 import Program from "./project";
 import Footer from "./footer";
 
+// Optionally, you can wrap with a Fragment for clarity
+function App() {
+  return (
+    <>
+      <NavBar />
+      <Home />
+      <About />
+      <Program />
+      <Footer />
+    </>
+  );
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <NavBar />
-    <Home />
-    <About />
-    <Program />
-    <Footer />
+    <App />
   </StrictMode>
 );
