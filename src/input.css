@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors */
+  --primary-color: #ffd700;
+  /* accent */
+  --secondary-color: #2c3e50;
+  /* base */
+  --highlight-color: #f39c12;
+  --text-color: #fff;
+  --bg-gradient: linear-gradient(135deg, #2c3e50, #34495e, #4b6cb7);
+  --card-bg: rgba(44, 62, 80, 0.7);
+  --card-hover-bg: rgba(76, 161, 175, 0.8);
+  --font-family: "Poppins", sans-serif;
+  --serif-font: "Playfair Display", serif;
+  --text-gradient: linear-gradient(90deg, #ffd700, #ff8c00);
+  --max-width: 1200px;
+  --radius: 16px;
+  --gap: 2rem;
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  max-width: var(--max-width);
+  margin-inline: auto;
+  min-height: 100vh;
+}
+/* about skill*/
+.skillsName span:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 215, 0, 0.4);
+}
