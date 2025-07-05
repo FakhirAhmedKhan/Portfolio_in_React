@@ -157,8 +157,6 @@ export default function Program() {
   ];
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
-
-  // NEW: limit shown projects
   const [visibleCount, setVisibleCount] = useState(6);
 
   // intersection observer animation

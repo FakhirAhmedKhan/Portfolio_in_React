@@ -26,6 +26,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -38,25 +39,15 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: var(--font-family);
   background: var(--bg-gradient);
   color: var(--text-color);
-  line-height: 1.6;
   max-width: var(--max-width);
   margin-inline: auto;
   min-height: 100vh;
-  padding-top: 10px;
 }
-
-/* ===========================
-   About Section
-=========================== */
-
+/* about skill*/
 .skillsName span:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 8px 16px rgba(255, 215, 0, 0.4);
