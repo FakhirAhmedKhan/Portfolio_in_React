@@ -44,8 +44,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main id="home" className="w-full scroll-smooth">
-      <section className="firstSection flex flex-wrap items-center justify-center py-4 sm:py-6 md:py-8 px-4 sm:px-6 lg:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-12 min-h-screen">
+    <main id="home" className="w-full scroll-smooth ms-0">
+      <section className="firstSection flex flex-wrap items-center justify-center py-20 sm:py-6 md:py-8 px-18 sm:px-6 lg:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-12 min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
