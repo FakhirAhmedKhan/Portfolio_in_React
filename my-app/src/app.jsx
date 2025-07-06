@@ -5,8 +5,22 @@ import About from "./about";
 import Program from "./project";
 import Footer from "./footer";
 
-const COMPONENTS = [NavBar, Home, About, Program, Footer];
-
 export default function App() {
-  return COMPONENTS.map((Component, idx) => <Component key={idx} />);
+  return (
+    <>
+      <NavBar />
+      <main className="pt-24">
+        <section id="home">
+          <Home />
+        </section>
+        <section id="about">
+          <About />
+        </section>
+        <section id="projects">
+          <Program />
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
 }

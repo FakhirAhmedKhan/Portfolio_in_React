@@ -53,7 +53,7 @@ export default function NavBar() {
     return () => document.removeEventListener("keydown", handleTab);
   }, [isOpen]);
 
-  // Enhancement: close menu on route/hash change
+  // Enhancement: close menu on hash change
   useEffect(() => {
     const closeOnHash = () => setIsOpen(false);
     window.addEventListener("hashchange", closeOnHash);

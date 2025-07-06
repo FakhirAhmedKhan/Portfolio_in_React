@@ -48,7 +48,6 @@ body {
   min-height: 100vh;
 }
 
-/* about skill */
 .skillsName span {
   transition: var(--transition);
 }

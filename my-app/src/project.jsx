@@ -112,7 +112,8 @@ const WORKS = [
     title: "🐍 Quiz in Python",
     link: "https://github.com/FakhirAhmedKhan/HTML-or-CSS-Quiz-by-using-python",
     pra: "A simple quiz app that tests knowledge of HTML, CSS, and JS. It runs in the terminal and shows the final score.",
-    codeLink: "https://github.com/FakhirAhmedKhan/HTML-or-CSS-Quiz-by-using-python",
+    codeLink:
+      "https://github.com/FakhirAhmedKhan/HTML-or-CSS-Quiz-by-using-python",
     img: "./assets/python.jfif",
   },
   {
@@ -169,7 +170,6 @@ const WORKS = [
 function ProjectCard({ item, index, isVisible, hovered, setHovered }) {
   return (
     <div
-      key={item.title}
       className={`bg-[var(--card-bg)] rounded-[var(--radius)] p-4 sm:p-6 lg:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition-all duration-500 backdrop-blur-[8px] border border-[rgba(255,255,255,0.1)] hover:bg-[var(--card-hover-bg)] hover:translate-y-[-8px] hover:scale-[1.03] hover:shadow-[0_16px_32px_rgba(255,215,0,0.3)] ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
@@ -224,7 +224,7 @@ export default function Program() {
 
   // intersection observer animation
   useEffect(() => {
-    const section = document.getElementById("works");
+    const section = document.getElementById("projects");
     if (!section) return;
     const observer = new window.IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
@@ -243,11 +243,7 @@ export default function Program() {
   );
 
   return (
-    <section
-      id="works"
-      aria-labelledby="works-heading"
-      className="w-full py-8 sm:py-12 lg:py-16"
-    >
+    <div className="w-full py-8 sm:py-12 lg:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* header section */}
         <article
@@ -315,6 +311,6 @@ export default function Program() {
           </div>
         )}
       </div>
-    </section>
+    </div>
   );
 }

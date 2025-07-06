@@ -40,23 +40,19 @@ export default function Footer() {
   return (
     <footer className="py-12 px-5 text-center text-[#ddd] border-t border-white/10">
       <div className="container mx-auto max-w-lg">
-        {/* Animate the heading */}
         <motion.h2
           className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-[var(--primary-color)] mb-3 font-semibold"
           {...headingMotion}
         >
           Feedback
         </motion.h2>
-        {/* Animate the description */}
         <motion.p
           className="font-sans text-base mb-5 text-[#ccc]"
           {...paragraphMotion(0.2)}
         >
           We'd love to hear what you think!
         </motion.p>
-        {/* Animate the form */}
         <motion.form
-          id="feedbackForm"
           className="max-w-[500px] mx-auto mb-5"
           {...formMotion}
           onSubmit={handleSubmit}
@@ -78,7 +74,6 @@ export default function Footer() {
           ></textarea>
           <button
             type="submit"
-            id="subBtn"
             className="mt-3 px-6 py-3 bg-[var(--primary-color)] text-[#222] rounded-md font-bold cursor-pointer border-0 transition-colors duration-300 hover:bg-[#ffc400] disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={submitted}
             aria-disabled={submitted}
@@ -86,7 +81,6 @@ export default function Footer() {
             {submitted ? "Thank you!" : "SUBMIT"}
           </button>
         </motion.form>
-        {/* Animate the copyright */}
         <motion.div className="space-y-1" {...copyrightMotion}>
           <p className="font-sans text-base mb-1 text-[#ccc]">
             © 2025 Fakhir Ahmed Khan. All rights reserved.
