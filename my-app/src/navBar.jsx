@@ -1,27 +1,64 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Typed from "typed.js";
 import { Dialog } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const NAV_LINKS = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Projects", href: "#projects" },
+];
+
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const navTextRef = useRef(null);
+
   useEffect(() => {
-    if (navTextRef.current) {
-      const typed = new Typed(navTextRef.current, {
-        strings: ["Portfolio"],
-        typeSpeed: 120,
-        showCursor: false,
-      });
-      return () => typed.destroy();
-    }
+    if (!navTextRef.current) return;
+    const typed = new Typed(navTextRef.current, {
+      strings: ["Portfolio"],
+      typeSpeed: 120,
+      showCursor: false,
+    });
+    return () => typed.destroy();
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
-  ];
+  const handleOpen = useCallback(() => setIsOpen(true), []);
+  const handleClose = useCallback(() => setIsOpen(false), []);
+
+  // Accessibility: trap focus in mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleTab = (e) => {
+      const focusableEls = document.querySelectorAll(
+        '.fixed.inset-0 [tabindex]:not([tabindex="-1"]), .fixed.inset-0 button, .fixed.inset-0 a'
+      );
+      const firstEl = focusableEls[0];
+      const lastEl = focusableEls[focusableEls.length - 1];
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      }
+    };
+    document.addEventListener("keydown", handleTab);
+    return () => document.removeEventListener("keydown", handleTab);
+  }, [isOpen]);
+
+  // Enhancement: close menu on route/hash change
+  useEffect(() => {
+    const closeOnHash = () => setIsOpen(false);
+    window.addEventListener("hashchange", closeOnHash);
+    return () => window.removeEventListener("hashchange", closeOnHash);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 shadow-md backdrop-blur bg-gradient-to-b from-slate-900/90 to-slate-900/60 border-b border-white/10">
@@ -30,24 +67,22 @@ export default function NavBar() {
         <div className="text-2xl md:text-3xl font-extrabold text-white tracking-wide select-none">
           <span ref={navTextRef} />
         </div>
-
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map(({ name, href }) => (
             <a
-              key={link.name}
-              href={link.href}
+              key={name}
+              href={href}
               className="relative px-3 py-2 text-white font-semibold rounded transition hover:text-indigo-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
             >
-              {link.name}
+              {name}
               <span className="absolute left-0 bottom-0 w-full h-0.5 bg-indigo-400 scale-x-0 hover:scale-x-100 transition-transform origin-left rounded-full" />
             </a>
           ))}
         </nav>
-
         {/* Mobile button */}
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
           className="md:hidden p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
           aria-label="Open menu"
         >
@@ -66,15 +101,15 @@ export default function NavBar() {
           </svg>
         </button>
       </div>
-
       {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <Dialog
             as="div"
             className="fixed inset-0 z-50 md:hidden"
-            open={isOpen} // Add this line
-            onClose={() => setIsOpen(false)}
+            open={isOpen}
+            onClose={handleClose}
+            static
           >
             {/* backdrop */}
             <motion.div
@@ -83,7 +118,6 @@ export default function NavBar() {
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/70 backdrop-blur"
             />
-
             {/* sliding panel */}
             <motion.div
               initial={{ y: "-100%" }}
@@ -97,22 +131,24 @@ export default function NavBar() {
                   Portfolio
                 </span>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="text-white text-3xl focus:outline-none"
                   aria-label="Close menu"
+                  tabIndex={0}
                 >
                   &times;
                 </button>
               </div>
               <ul className="flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <li key={link.name}>
+                {NAV_LINKS.map(({ name, href }) => (
+                  <li key={name}>
                     <a
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
+                      href={href}
+                      onClick={handleClose}
                       className="block w-full px-4 py-3 text-lg font-semibold text-white rounded hover:bg-indigo-400/20 transition"
+                      tabIndex={0}
                     >
-                      {link.name}
+                      {name}
                     </a>
                   </li>
                 ))}

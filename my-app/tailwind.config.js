@@ -12,12 +12,38 @@ export default {
   theme: {
     extend: {
       screens: {
-        xl: "1200px",
-        lg: "900px",
-        md: "768px",
-        sm: "600px",
-        xs: "480px",
         xxs: "360px",
+        xs: "480px",
+        sm: "600px",
+        md: "768px",
+        lg: "900px",
+        xl: "1200px",
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "1rem",
+          sm: "2rem",
+          lg: "3rem",
+          xl: "4rem",
+        },
+      },
+      borderRadius: {
+        DEFAULT: "var(--radius)",
+        md: "12px",
+        lg: "16px",
+      },
+      colors: {
+        primary: "var(--primary-color)",
+        secondary: "var(--secondary-color)",
+        highlight: "var(--highlight-color)",
+        card: "var(--card-bg)",
+        cardhover: "var(--card-hover-bg)",
+        text: "var(--text-color)",
+      },
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
+        serif: ["Playfair Display", "serif"],
       },
     },
   },

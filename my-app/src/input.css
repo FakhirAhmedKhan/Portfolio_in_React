@@ -5,9 +5,7 @@
 :root {
   /* Colors */
   --primary-color: #ffd700;
-  /* accent */
   --secondary-color: #2c3e50;
-  /* base */
   --highlight-color: #f39c12;
   --text-color: #fff;
   --bg-gradient: linear-gradient(135deg, #2c3e50, #34495e, #4b6cb7);
@@ -22,7 +20,9 @@
   --transition: all 0.3s ease;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -47,7 +47,11 @@ body {
   margin-inline: auto;
   min-height: 100vh;
 }
-/* about skill*/
+
+/* about skill */
+.skillsName span {
+  transition: var(--transition);
+}
 .skillsName span:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 8px 16px rgba(255, 215, 0, 0.4);

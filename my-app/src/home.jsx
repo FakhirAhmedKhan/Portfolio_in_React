@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  const typedRef = useRef(null);
+  const timeoutRef = useRef();
+
   useEffect(() => {
-    const typedElement = document.getElementById("typed");
+    const typedElement = typedRef.current;
     const strings = ["Web Designer", "Web Developer"];
     let stringIndex = 0;
     let charIndex = 0;
@@ -15,37 +18,38 @@ export default function Home() {
 
       if (isPaused) {
         isPaused = false;
-        setTimeout(type, 1000);
+        timeoutRef.current = setTimeout(type, 1000);
         return;
       }
 
       if (isDeleting) {
-        typedElement.textContent = currentString.substring(0, charIndex - 1);
         charIndex--;
+        typedElement.textContent = currentString.slice(0, charIndex);
         if (charIndex === 0) {
           isDeleting = false;
           stringIndex = (stringIndex + 1) % strings.length;
-          setTimeout(type, 500);
-          return;
+          timeoutRef.current = setTimeout(type, 500);
+        } else {
+          timeoutRef.current = setTimeout(type, 50);
         }
-        setTimeout(type, 50);
       } else {
-        typedElement.textContent = currentString.substring(0, charIndex + 1);
         charIndex++;
+        typedElement.textContent = currentString.slice(0, charIndex);
         if (charIndex === currentString.length) {
           isDeleting = true;
           isPaused = true;
         }
-        setTimeout(type, 80);
+        timeoutRef.current = setTimeout(type, 80);
       }
     };
 
     type();
+    return () => clearTimeout(timeoutRef.current);
   }, []);
 
   return (
     <main id="home" className="w-full scroll-smooth">
-      <section className="firstSection flex flex-wrap items-center justify-center py-4 sm:py-6 md:py-8 px-4 sm:px-6 lg:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-12 min-h-screen">
+      <section className="firstSection flex flex-wrap items-center justify-center py-20 sm:py-6 md:py-8 px-4 sm:px-6 lg:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-12 min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -61,11 +65,11 @@ export default function Home() {
             </span>
           </span>
           <span className="block mt-2 font-medium text-[clamp(1rem,4vw,1.6rem)] sm:text-[clamp(1.2rem,4vw,1.6rem)] text-[hsl(0,13%,95%)]">
-            I'm a <span className="role"></span>
-            <br />
+            I'm a{" "}
             <span
               className="text-[clamp(1.5rem,6vw,3rem)] sm:text-[clamp(2rem,5vw,3rem)] text-[#f4da34cd]"
               id="typed"
+              ref={typedRef}
               aria-live="polite"
               aria-label="animated role description"
             ></span>

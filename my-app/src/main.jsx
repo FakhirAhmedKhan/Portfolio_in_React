@@ -4,7 +4,5 @@ import { StrictMode } from "react";
 import App from "./app";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+  <StrictMode children={<App />} />
 );
