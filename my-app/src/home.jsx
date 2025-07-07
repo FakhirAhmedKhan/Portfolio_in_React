@@ -48,31 +48,27 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="firstSection flex flex-wrap items-center justify-center py-4 sm:py-6 md:py-8 px-4 sm:px-6 lg:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-12 min-h-screen">
+    <section className="flex flex-wrap items-center justify-center py-8 px-4 gap-8 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="intro flex-1 min-w-[280px] sm:min-w-[350px] md:min-w-[400px] text-center p-4 sm:p-6 md:p-8"
+        className="flex-1 min-w-[260px] text-center p-4"
       >
-        <span className="intro-text block text-[clamp(1.5rem,6vw,3rem)] sm:text-[clamp(2rem,5vw,3rem)] text-white leading-[1.3]">
-          Hi, I'm
-          <span className="name text-[var(--primary-color)] font-bold block sm:inline">
-            {" "}
-            Fakhir Ahmed Khan
-          </span>
-        </span>
-        <span className="block mt-2 font-medium text-[clamp(1rem,4vw,1.6rem)] sm:text-[clamp(1.2rem,4vw,1.6rem)] text-[hsl(0,13%,95%)]">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+          Hi, I'm{" "}
+          <span className="text-[var(--primary-color)]">Fakhir Ahmed Khan</span>
+        </h1>
+        <div className="mt-2 text-xl sm:text-2xl text-yellow-200 font-medium">
           I'm a{" "}
           <span
-            className="text-[clamp(1.5rem,6vw,3rem)] sm:text-[clamp(2rem,5vw,3rem)] text-[#f4da34cd]"
             id="typed"
             ref={typedRef}
             aria-live="polite"
             aria-label="animated role description"
           ></span>
-        </span>
+        </div>
       </motion.div>
 
       <motion.div
@@ -80,13 +76,15 @@ export default function Home() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-        className="rightSection flex-1 min-w-[280px] sm:min-w-[320px] md:min-w-[350px] flex justify-center"
+        className="flex-1 min-w-[220px] flex justify-center items-center"
       >
         <img
-          src="./assets/homeImg.png"
+          src="/portfolio_in_React/assets/hero.avif"
           alt="Portrait of Fakhir Ahmed Khan"
           className="homeImg block w-full max-w-[280px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-[400px] h-auto rounded-[12px] mx-auto sm:ml-4 md:ml-6 lg:ml-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
-          loading="lazy"
+          width={192}
+          height={256}
+          loading="eager"
         />
       </motion.div>
     </section>
