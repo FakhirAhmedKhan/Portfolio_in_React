@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const typedRef = useRef(null);
@@ -14,7 +14,7 @@ export default function Home() {
     let isPaused = false;
 
     const type = () => {
-      const currentString = strings[stringIndex];
+      const current = strings[stringIndex];
 
       if (isPaused) {
         isPaused = false;
@@ -24,18 +24,16 @@ export default function Home() {
 
       if (isDeleting) {
         charIndex--;
-        typedElement.textContent = currentString.slice(0, charIndex);
+        typedElement.textContent = current.slice(0, charIndex);
+        timeoutRef.current = setTimeout(type, charIndex === 0 ? 500 : 50);
         if (charIndex === 0) {
           isDeleting = false;
           stringIndex = (stringIndex + 1) % strings.length;
-          timeoutRef.current = setTimeout(type, 500);
-        } else {
-          timeoutRef.current = setTimeout(type, 50);
         }
       } else {
         charIndex++;
-        typedElement.textContent = currentString.slice(0, charIndex);
-        if (charIndex === currentString.length) {
+        typedElement.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
           isDeleting = true;
           isPaused = true;
         }
@@ -48,7 +46,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="flex flex-wrap items-center justify-center py-8 px-4 gap-8 min-h-screen">
+    <section className="flex flex-wrap items-center justify-center gap-8 px-4 py-8 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -57,8 +55,7 @@ export default function Home() {
         className="flex-1 min-w-[260px] text-center p-4"
       >
         <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-          Hi, I'm{" "}
-          <span className="text-[var(--primary-color)]">Fakhir Ahmed Khan</span>
+          Hi, I'm <span className="text-[#ffd700]">Fakhir Ahmed Khan</span>
         </h1>
         <div className="mt-2 text-xl sm:text-2xl text-yellow-200 font-medium">
           I'm a{" "}
@@ -67,7 +64,7 @@ export default function Home() {
             ref={typedRef}
             aria-live="polite"
             aria-label="animated role description"
-          ></span>
+          />
         </div>
       </motion.div>
 
@@ -81,7 +78,7 @@ export default function Home() {
         <img
           src="/portfolio_in_React/assets/hero.avif"
           alt="Portrait of Fakhir Ahmed Khan"
-          className="homeImg block w-full max-w-[280px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-[400px] h-auto rounded-[12px] mx-auto sm:ml-4 md:ml-6 lg:ml-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+          className="block w-full max-w-[400px] rounded-xl mx-auto cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
           width={192}
           height={256}
           loading="eager"

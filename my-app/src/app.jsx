@@ -9,17 +9,15 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <main className="pt-24">
-        <section id="home">
-          <Home />
-        </section>
-        <section id="about">
-          <About />
-        </section>
-        <section id="projects">
-          <Program />
-        </section>
-      </main>
+      <section id="home">
+        <Home />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="projects">
+        <Program />
+      </section>
       <Footer />
     </>
   );
