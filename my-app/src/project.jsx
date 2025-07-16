@@ -1,17 +1,5 @@
 import { useState, useMemo } from "react";
-
-const SOCIALS = [
-  {
-    href: "https://github.com/FakhirAhmedKhan",
-    img: "/portfolio_in_React/assets/giticon.avif",
-    alt: "GitHub",
-  },
-  {
-    href: "https://linkedin.com/in/fakhirahmedkhan",
-    img: "/portfolio_in_React/assets/linkdenIcon.avif",
-    alt: "LinkedIn",
-  },
-];
+import { motion as Motion } from "framer-motion";
 
 const WORKS = [
   {
@@ -167,43 +155,49 @@ const WORKS = [
   },
 ];
 
-function ProjectCard({ item }) {
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-5 shadow hover:shadow-2xl transition duration-300">
-      <img
-        src={item.img}
-        alt={`${item.title} project screenshot`}
-        width={320}
-        height={180}
-        loading="lazy"
-        className="rounded-lg w-full h-40 object-cover mb-3"
-      />
-      <h3 className="text-lg font-bold text-yellow-400">{item.title}</h3>
-      <p className="text-sm text-gray-300 flex-1 mt-1">{item.pra}</p>
-      <div className="flex gap-4 mt-3">
-        <a
-          href={item.link}
-          target="_blank"
-          rel="noreferrer"
-          className="text-blue-400 hover:underline"
-        >
-          Live
-        </a>
-        <a
-          href={item.codeLink}
-          target="_blank"
-          rel="noreferrer"
-          className="text-blue-400 hover:underline"
-        >
-          Code
-        </a>
-      </div>
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const ProjectCard = ({ title, link, pra, codeLink, img }) => (
+  <Motion.div
+    className="bg-white/5 border border-white/10 rounded-xl p-5 shadow hover:shadow-2xl transition duration-300"
+    variants={fadeInUp}
+    initial="hidden"
+    whileInView="visible"
+  >
+    <img
+      src={img}
+      alt={`${title} project screenshot`}
+      className="rounded-lg w-full h-40 object-cover mb-3"
+      loading="lazy"
+    />
+    <h3 className="text-lg font-bold text-yellow-400">{title}</h3>
+    <p className="text-sm text-gray-300 mt-1">{pra}</p>
+    <div className="flex gap-4 mt-3">
+      <a
+        href={link}
+        className="text-blue-400 hover:underline"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Live
+      </a>
+      <a
+        href={codeLink}
+        className="text-blue-400 hover:underline"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Code
+      </a>
     </div>
-  );
-}
+  </Motion.div>
+);
 
 export default function Program() {
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(3);
   const visibleWorks = useMemo(
     () => WORKS.slice(0, visibleCount),
     [visibleCount]
@@ -213,39 +207,28 @@ export default function Program() {
     <section className="w-full py-12 min-h-screen bg-gradient-to-b">
       <div className="max-w-6xl mx-auto px-4">
         <header className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2">
+          <Motion.h2
+            className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2"
+            variants={fadeInUp}
+          >
             My Works
-          </h2>
-          <p className="text-gray-300 mb-4">
-            A showcase of my latest projects and experiments.
-          </p>
-          <div className="flex justify-center gap-6">
-            {SOCIALS.map(({ href, img, alt }) => (
-              <a key={alt} href={href} target="_blank" rel="noreferrer">
-                <img
-                  src={img}
-                  alt={alt}
-                  className="w-8 h-8 hover:scale-110 transition-transform duration-200"
-                />
-              </a>
-            ))}
-          </div>
+          </Motion.h2>
         </header>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {visibleWorks.map((item) => (
-            <ProjectCard key={item.title} item={item} />
+            <ProjectCard key={item.title} {...item} />
           ))}
         </div>
 
         {visibleCount < WORKS.length && (
           <div className="flex justify-center mt-10">
-            <button
-              onClick={() => setVisibleCount((v) => v + 6)}
+            <Motion.button
+              onClick={() => setVisibleCount((v) => v + 3)}
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-lg shadow transition duration-200"
             >
               Load More
-            </button>
+            </Motion.button>
           </div>
         )}
       </div>

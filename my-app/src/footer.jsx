@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
+import { motion as Motion } from "framer-motion";
 
 export default function Footer() {
   const [submitted, setSubmitted] = useState(false);
-  const textareaRef = useRef(null);
+  const textareaRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +13,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-12 px-5 text-center border-t border-white/10 linear-gradient(135deg, #2c3e50, #34495e, #4b6cb7) -to-b from-transparent">
+    <Motion.footer className="py-12 px-5 text-center border-t border-white/10 bg-gradient-to-b ">
       <div className="max-w-md mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-2">
           Feedback
@@ -25,22 +26,23 @@ export default function Footer() {
           className="bg-white/10 backdrop-blur-md p-5 rounded-xl shadow-lg mb-5"
         >
           <textarea
+            ref={textareaRef}
             id="feedback"
             name="feedback"
             placeholder="Your feedback..."
-            required
             rows={4}
-            ref={textareaRef}
+            required
             disabled={submitted}
             className="w-full p-3 rounded-lg bg-black/40 text-white border border-yellow-400 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
           />
-          <button
+          <Motion.button
+            whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={submitted}
             className="mt-4 w-full py-3 bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitted ? "Thank you!" : "SUBMIT"}
-          </button>
+          </Motion.button>
         </form>
 
         <div className="text-sm text-gray-400 space-y-1">
@@ -48,6 +50,6 @@ export default function Footer() {
           <p>Thank you for visiting my portfolio.</p>
         </div>
       </div>
-    </footer>
+    </Motion.footer>
   );
 }

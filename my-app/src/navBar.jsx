@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion as Motion } from "framer-motion";
 import Typed from "typed.js";
 
 const LINKS = [
@@ -11,6 +12,7 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const typedRef = useRef(null);
 
+  // Initialize Typed.js
   useEffect(() => {
     if (!typedRef.current) return;
     const typed = new Typed(typedRef.current, {
@@ -21,37 +23,42 @@ export default function NavBar() {
     return () => typed.destroy();
   }, []);
 
+  // Close mobile menu on hashchange
   useEffect(() => {
     const closeMenu = () => setIsOpen(false);
     window.addEventListener("hashchange", closeMenu);
     return () => window.removeEventListener("hashchange", closeMenu);
   }, []);
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 border-b border-white/10 backdrop-blur">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <h1
-          ref={typedRef}
-          className="text-2xl font-bold text-white select-none"
-        />
+  const NavLinks = ({ onClick }) =>
+    LINKS.map(({ name, href }) => (
+      <a
+        key={name}
+        href={href}
+        onClick={onClick}
+        className="block px-4 py-2 text-white hover:text-indigo-400 hover:bg-indigo-500/20 rounded transition duration-200 md:p-0 md:hover:bg-transparent"
+      >
+        {name}
+      </a>
+    ));
 
-        {/* Desktop Menu */}
-        <nav className="hidden md:flex gap-6">
-          {LINKS.map(({ name, href }) => (
-            <a
-              key={name}
-              href={href}
-              className="text-white font-semibold hover:text-indigo-400 transition"
-            >
-              {name}
-            </a>
-          ))}
-        </nav>
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+        {/* Logo + Greeting */}
+        <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
+          <h1 className="text-2xl font-bold text-white select-none">
+            <span ref={typedRef} />
+          </h1>
+        </div>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex gap-6">{<NavLinks />}</nav>
 
         {/* Mobile Button */}
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 rounded-lg hover:bg-indigo-500/30 transition"
           aria-label="Open menu"
         >
           <svg
@@ -71,39 +78,27 @@ export default function NavBar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black/70 backdrop-blur z-40"
-            onClick={() => setIsOpen(false)}
-          />
-
-          {/* Slide-down menu */}
-          <div className="fixed top-0 left-0 right-0 z-50 bg-slate-800 p-6 rounded-b-xl animate-slide-down">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-xl font-bold text-white">Portfolio</span>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white text-3xl"
-              >
-                &times;
-              </button>
-            </div>
-            <ul className="flex flex-col gap-3">
-              {LINKS.map(({ name, href }) => (
-                <li key={name}>
-                  <a
-                    href={href}
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-2 text-white hover:bg-indigo-500/30 rounded transition"
-                  >
-                    {name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <Motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-0 left-0 right-0 z-50 bg-slate-800 p-6 rounded-b-xl shadow-lg md:hidden"
+        >
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-xl font-bold text-white">Portfolio</span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white text-3xl leading-none"
+              aria-label="Close menu"
+            >
+              &times;
+            </button>
           </div>
-        </>
+          <nav className="flex flex-col gap-3">
+            <NavLinks onClick={() => setIsOpen(false)} />
+          </nav>
+        </Motion.div>
       )}
     </header>
   );
